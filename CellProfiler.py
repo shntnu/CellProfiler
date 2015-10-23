@@ -229,9 +229,9 @@ def main(args):
             wx.Log.EnableLogging(False)
             from cellprofiler.cellprofilerapp import CellProfilerApp
             from cellprofiler.workspace import is_workspace_file
-            show_splashbox = (options.pipeline_filename is None and
-                              (not options.new_project) and
-                              options.show_splashbox)
+            # show_splashbox = (options.pipeline_filename is None and
+            #                   (not options.new_project) and
+            #                   options.show_splashbox)
             
             if options.pipeline_filename:
                 if is_workspace_file(options.pipeline_filename):
@@ -249,7 +249,7 @@ def main(args):
             App = CellProfilerApp(
                 0, 
                 check_for_new_version = (options.pipeline_filename is None),
-                show_splashbox = show_splashbox,
+                # show_splashbox = show_splashbox,
                 workspace_path = workspace_path,
                 pipeline_path = pipeline_path)
 
