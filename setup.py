@@ -112,7 +112,7 @@ setuptools.setup(
     description="",
     entry_points={
         'console_scripts': [
-
+            "cellprofiler=cellprofiler.main:main"
         ],
         'gui_scripts': [
 
@@ -133,7 +133,10 @@ setuptools.setup(
     long_description="",
     name="cellprofiler",
     packages=[
-        "cellprofiler"
+        "cellprofiler", "cellprofiler.modules", "cellprofiler.modules.plugins",
+        "cellprofiler.utilities", "cellprofiler.cpmath",
+        "cellprofiler.gui", "cellprofiler.gui.html", 
+        "cellprofiler.icons", "cellprofiler.matlab", "imagej"
     ],
     setup_requires=[
         "clint",

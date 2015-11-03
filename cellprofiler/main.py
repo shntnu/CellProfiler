@@ -72,6 +72,8 @@ def main(args = None):
 
     args - command-line arguments, e.g. sys.argv
     '''
+    if args is None:
+        args = sys.argv
     import cellprofiler.preferences as cpprefs
     cpprefs.set_awt_headless(True)
     switches = ('--work-announce', '--knime-bridge-address')
@@ -165,11 +167,6 @@ def main(args = None):
     # has to be done before CellProfilerApp is imported
     from matplotlib import use as mpluse
     mpluse('WXAgg')
-    
-    if (not hasattr(sys, 'frozen')) and options.build_extensions:
-        build_extensions()
-        if options.build_and_exit:
-            return
     
     if options.omero_credentials is not None:
         set_omero_credentials_from_string(options.omero_credentials)
@@ -275,22 +272,20 @@ def main(args = None):
         raise
     
     finally:
-        if __name__ == "__main__":
-            try:
-                from ilastik.core.jobMachine import GLOBAL_WM
-                GLOBAL_WM.stopWorkers()
-            except:
-                logging.root.warn("Failed to stop Ilastik")
-            try:
-                from cellprofiler.utilities.zmqrequest import join_to_the_boundary
-                join_to_the_boundary()
-            except:
-                logging.root.warn("Failed to stop zmq boundary", exc_info=1)
-            try:
-                cp_stop_vm()
-            except:
-                logging.root.warn("Failed to stop the JVM", exc_info=1)
-            os._exit(0)
+        try:
+            from ilastik.core.jobMachine import GLOBAL_WM
+            GLOBAL_WM.stopWorkers()
+        except:
+            logging.root.warn("Failed to stop Ilastik")
+        try:
+            from cellprofiler.utilities.zmqrequest import join_to_the_boundary
+            join_to_the_boundary()
+        except:
+            logging.root.warn("Failed to stop zmq boundary", exc_info=1)
+        try:
+            cp_stop_vm()
+        except:
+            logging.root.warn("Failed to stop the JVM", exc_info=1)
 
 def parse_args(args):
     '''Parse the CellProfiler command-line arguments'''
@@ -954,6 +949,3 @@ def run_pipeline_headless(options, args):
     if measurements is not None:
         measurements.close()
     
-if __name__ == "__main__":
-    main(sys.argv)
-    os._exit(0)
