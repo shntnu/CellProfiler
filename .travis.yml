@@ -38,20 +38,6 @@ install:
   - pip install --editable git+https://github.com/CellH5/cellh5.git#egg=cellh5
   - python setup.py prokaryote
   - python setup.py build
-  - python setup.py install
+  - python setup.py develop install
 script:
-  - py.test cellprofiler/matlab/tests/
-  - py.test cellprofiler/tests/test_analysis.py
-  - py.test cellprofiler/tests/test_analysisworker.py
-  - py.test cellprofiler/tests/test_cellprofiler.py
-  - py.test cellprofiler/tests/test_haralick.py
-  - py.test cellprofiler/tests/test_image.py
-  - py.test cellprofiler/tests/test_measurements.py
-  - py.test cellprofiler/tests/test_nowx.py
-  - py.test cellprofiler/tests/test_objects.py
-  - py.test cellprofiler/tests/test_pipeline.py
-  - py.test cellprofiler/tests/test_preferences.py
-  - py.test cellprofiler/tests/test_settings.py
-  - py.test cellprofiler/tests/test_variable.py
-  - py.test cellprofiler/tests/test_workspace.py
-#  - python cpnose.py --with-javabridge --noguitests cellprofiler/modules/tests 2>&1 | egrep -v "(^\[INFO\]|\[Thread-0\]|\[Thread-1\]|\[AWT\-AppKit\]|Exception\sKeyError|\s*self\.id\.close\(\)|.*\sRuntimeWarning\:\sFound\smurdered\sidentifier|Warning\:\sorg\.apache\.xerces\.parsers\.SAXParser\:)"
+  - python setup.py test
