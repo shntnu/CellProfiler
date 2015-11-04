@@ -72,8 +72,21 @@ class Test(setuptools.command.test.test):
 
     def run_tests(self):
         import pytest
+        import unittest
         from cellprofiler.utilities.cpjvm import cp_start_vm
         from cellprofiler.main import stop_cellprofiler
+        #
+        # Monkey-patch pytest.Function
+        # See https://github.com/pytest-dev/pytest/issues/1169
+        #
+        try:
+            from _pytest.unittest import TestCaseFunction
+            def runtest(self):
+                setattr(self._testcase, "__name__", self.name)
+                self._testcase(result=self)
+            TestCaseFunction.runtest = runtest
+        except:
+            pass
 
         cp_start_vm()
         errno = pytest.main(self.pytest_args)

@@ -185,7 +185,7 @@ def main(args = None):
     #
     # After the crucial preferences are established, we can start the VM
     #
-    from cellprofiler.utilities.cpjvm import cp_start_vm, cp_stop_vm
+    from cellprofiler.utilities.cpjvm import cp_start_vm
     cp_start_vm()
     #
     # Not so crucial preferences...
@@ -285,6 +285,7 @@ def stop_cellprofiler():
     except:
         logging.root.warn("Failed to stop zmq boundary", exc_info=1)
     try:
+        from cellprofiler.utilities.cpjvm import cp_stop_vm
         cp_stop_vm()
     except:
         logging.root.warn("Failed to stop the JVM", exc_info=1)
