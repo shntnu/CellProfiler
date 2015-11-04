@@ -43,4 +43,4 @@ install:
   - python setup.py develop install
   - pip freeze
 script:
-  - python setup.py --skip-build test
+  - python setup.py develop --no-deps test
