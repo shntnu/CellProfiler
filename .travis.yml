@@ -40,7 +40,7 @@ install:
   - pip install --editable git+https://github.com/CellH5/cellh5.git#egg=cellh5
   - python setup.py prokaryote
   - python setup.py build
-  - python setup.py develop install
+  - python setup.py develop --no-deps install
   - pip freeze
 script:
-  - python setup.py develop --no-deps test
+  - python setup.py test
