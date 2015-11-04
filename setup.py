@@ -56,7 +56,7 @@ class Prokaryote(setuptools.Command):
 class Test(setuptools.command.test.test):
     user_options = [
         ("pytest-args=", "a", "arguments to pass to py.test")
-    ]
+    ] + setuptools.command.test.test.user_options
 
     def initialize_options(self):
         setuptools.command.test.test.initialize_options(self)
@@ -72,8 +72,12 @@ class Test(setuptools.command.test.test):
 
     def run_tests(self):
         import pytest
+        from cellprofiler.utilities.cpjvm import cp_start_vm
+        from cellprofiler.main import stop_cellprofiler
 
+        cp_start_vm()
         errno = pytest.main(self.pytest_args)
+        stop_cellprofiler()
 
         sys.exit(errno)
 
@@ -136,7 +140,7 @@ setuptools.setup(
         "cellprofiler", "cellprofiler.modules", "cellprofiler.modules.plugins",
         "cellprofiler.utilities", "cellprofiler.cpmath",
         "cellprofiler.gui", "cellprofiler.gui.html", 
-        "cellprofiler.icons", "cellprofiler.matlab", "imagej"
+        "cellprofiler.icons", "cellprofiler.matlab", "contrib", "imagej"
     ],
     setup_requires=[
         "clint",

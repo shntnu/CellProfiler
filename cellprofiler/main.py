@@ -272,21 +272,23 @@ def main(args = None):
         raise
     
     finally:
-        try:
-            from ilastik.core.jobMachine import GLOBAL_WM
-            GLOBAL_WM.stopWorkers()
-        except:
-            logging.root.warn("Failed to stop Ilastik")
-        try:
-            from cellprofiler.utilities.zmqrequest import join_to_the_boundary
-            join_to_the_boundary()
-        except:
-            logging.root.warn("Failed to stop zmq boundary", exc_info=1)
-        try:
-            cp_stop_vm()
-        except:
-            logging.root.warn("Failed to stop the JVM", exc_info=1)
-
+        stop_cellprofiler()
+def stop_cellprofiler():
+    try:
+        from ilastik.core.jobMachine import GLOBAL_WM
+        GLOBAL_WM.stopWorkers()
+    except:
+        logging.root.warn("Failed to stop Ilastik")
+    try:
+        from cellprofiler.utilities.zmqrequest import join_to_the_boundary
+        join_to_the_boundary()
+    except:
+        logging.root.warn("Failed to stop zmq boundary", exc_info=1)
+    try:
+        cp_stop_vm()
+    except:
+        logging.root.warn("Failed to stop the JVM", exc_info=1)
+    
 def parse_args(args):
     '''Parse the CellProfiler command-line arguments'''
     import optparse
