@@ -4,7 +4,6 @@ import os
 import requests
 import setuptools
 import setuptools.command.build_ext
-import setuptools.command.test
 import sys
 
 
@@ -53,24 +52,18 @@ class Prokaryote(setuptools.Command):
             file.close()
 
 
-class Test(setuptools.command.test.test):
+class Test(setuptools.Command):
     user_options = [
         ("pytest-args=", "a", "arguments to pass to py.test")
-    ] + setuptools.command.test.test.user_options
+    ]
 
     def initialize_options(self):
-        setuptools.command.test.test.initialize_options(self)
-
         self.pytest_args = []
 
     def finalize_options(self):
-        setuptools.command.test.test.finalize_options(self)
+        pass
 
-        self.test_args = []
-
-        self.test_suite = True
-
-    def run_tests(self):
+    def run(self):
         import pytest
         import unittest
         from cellprofiler.utilities.cpjvm import cp_start_vm
