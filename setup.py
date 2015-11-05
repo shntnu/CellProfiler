@@ -73,7 +73,7 @@ class Test(setuptools.Command):
         s1 = context.socket(zmq.PAIR)
         s1.setsockopt(zmq.LINGER, 0)
         port = s1.bind_to_random_port("tcp://127.0.0.1")
-        s2 = self.context.socket(zmq.PAIR)
+        s2 = context.socket(zmq.PAIR)
         s2.setsockopt(zmq.LINGER, 0)
         s2.connect('tcp://127.0.0.1:%d' % port)
         try:
