@@ -400,7 +400,7 @@ class TestAnalysis(unittest.TestCase):
         logger.debug("Exiting %s" % inspect.getframeinfo(inspect.currentframe()).function)
             
     def test_04_02_initial_measurements_request(self):
-        logger.warn("Entering %s" % inspect.getframeinfo(inspect.currentframe()).function)
+        logger.debug("Entering %s" % inspect.getframeinfo(inspect.currentframe()).function)
         pipeline, m = self.make_pipeline_and_measurements_and_start()
         with self.FakeWorker() as worker:
             worker.connect(self.analysis.runner.work_announce_address)
@@ -437,10 +437,10 @@ class TestAnalysis(unittest.TestCase):
                                 np.testing.assert_almost_equal(sv, cv)
             finally:
                 client_measurements.close()
-                logger.warn("Exiting %s" % inspect.getframeinfo(inspect.currentframe()).function)
+                logger.debug("Exiting %s" % inspect.getframeinfo(inspect.currentframe()).function)
                 
     def test_04_03_interaction(self):
-        logger.warn("Entering %s" % inspect.getframeinfo(inspect.currentframe()).function)
+        logger.debug("Entering %s" % inspect.getframeinfo(inspect.currentframe()).function)
         pipeline, m = self.make_pipeline_and_measurements_and_start()
         with self.FakeWorker() as worker:
             worker.connect(self.analysis.runner.work_announce_address)
@@ -455,7 +455,7 @@ class TestAnalysis(unittest.TestCase):
             reply = fn_interaction_reply()
             self.assertIsInstance(reply, cpanalysis.InteractionReply)
             self.assertEqual(reply.hello, "world")
-        logger.warn("Exiting %s" % inspect.getframeinfo(inspect.currentframe()).function)
+        logger.debug("Exiting %s" % inspect.getframeinfo(inspect.currentframe()).function)
         
     def test_04_04_01_display(self):
         logger.debug("Entering %s" % inspect.getframeinfo(inspect.currentframe()).function)
