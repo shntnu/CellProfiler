@@ -66,11 +66,31 @@ class Test(setuptools.Command):
     def finalize_options(self):
         pass
 
+    def test_zmq(self):
+        '''Test the ZMQ library itself to see if it's installed correctly'''
+        import zmq
+        context = zmq.Context.instance()
+        s1 = context.socket(zmq.PAIR)
+        s1.setsockopt(zmq.LINGER, 0)
+        port = s1.bind_to_random_port("tcp://127.0.0.1")
+        s2 = self.context.socket(zmq.PAIR)
+        s2.setsockopt(zmq.LINGER, 0)
+        s2.connect('tcp://127.0.0.1:%d' % port)
+        try:
+            s1.send("hello")
+            assert s2.recv() == "hello"
+        finally:
+            s1.close(0)
+            s2.close(0)
+        
     def run(self):
         import pytest
         import unittest
         from cellprofiler.utilities.cpjvm import cp_start_vm
         from cellprofiler.main import stop_cellprofiler
+        self.announce("Testing ZMQ")
+        self.test_zmq()
+        self.announce("Running unit tests")
         #
         # Monkey-patch pytest.Function
         # See https://github.com/pytest-dev/pytest/issues/1169
