@@ -19,7 +19,7 @@ class Prokaryote(setuptools.Command):
         pass
 
     def run(self):
-        VERSION = "1.0.2"
+        VERSION = "1.0.3"
 
         directory = os.path.join("imagej", "jars")
 
@@ -36,7 +36,10 @@ class Prokaryote(setuptools.Command):
             with open(prokaryote, "wb") as f:
                 total_length = int(request.headers.get("content-length"))
 
-                for chunk in clint.textui.progress.bar(request.iter_content(chunk_size=1024), expected_size=(total_length / 1024) + 1):
+                for chunk in clint.textui.progress.bar(
+                    request.iter_content(chunk_size=32768), 
+                    expected_size=(total_length / 32768) + 1,
+                    hide=not self.verbose):
                     if chunk:
                         f.write(chunk)
 
