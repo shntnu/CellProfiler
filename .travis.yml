@@ -35,8 +35,8 @@ virtualenv:
 install:
   - pip install --upgrade pip
   - pip install --upgrade wheel
+  - pip install --upgrade pytest>=2.8
   - pip install cython
-  - pip install pytest>=2.8
 #
 # Explicitly install Javabridge here - if you let it get installed implicitly
 # by parsing requirements.txt, it is somehow linked to the wrong version
