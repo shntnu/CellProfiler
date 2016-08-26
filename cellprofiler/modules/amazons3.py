@@ -3,12 +3,12 @@
 Volume
 
 """
-
+import boto3
 import cellprofiler.image
 import cellprofiler.measurement
 import cellprofiler.module
 import cellprofiler.setting
-import os.path
+import re
 import skimage.io
 
 
@@ -57,7 +57,15 @@ class AmazonS3(cellprofiler.module.Module):
 
         name = self.name.value
 
-        x = skimage.io.imread(path)
+        client = boto3.client('s3')
+
+        bucket_name, filename = re.compile('s3://([\w\d\-\.]+)/(.*)').search(path).groups()
+
+        url = client.generate_presigned_url('get_object',
+                                            Params={'Bucket': bucket_name, 'Key': filename,},
+                                            ExpiresIn=86400, )
+
+        x = skimage.io.imread(url)
 
         image = cellprofiler.image.Image()
 

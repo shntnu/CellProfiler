@@ -544,7 +544,7 @@ class PathnameOrURL(Pathname):
 
     def is_url(self):
         return any([self.value_text.lower().startswith(scheme)
-                    for scheme in ("http:", "https:", "ftp:")])
+                    for scheme in ("http:", "https:", "ftp:", "s3:")])
 
     def test_valid(self, pipeline):
         if not self.is_url():
