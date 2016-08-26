@@ -14,7 +14,6 @@ from cellprofiler.preferences import get_plugin_directory
 
 # python modules and their corresponding cellprofiler.module classes
 pymodule_to_cpmodule = {'align': 'Align',
-                        'amazons3': 'AmazonS3',
                         'applythreshold': 'ApplyThreshold',
                         'calculateimageoverlap': 'CalculateImageOverlap',
                         'calculatemath': 'CalculateMath',
@@ -95,7 +94,6 @@ pymodule_to_cpmodule = {'align': 'Align',
 
 # the builtin CP modules that will be loaded from the cellprofiler.modules directory
 builtin_modules = ['align',
-                   'amazons3',
                    'applythreshold',
                    'calculateimageoverlap',
                    'calculatemath',
