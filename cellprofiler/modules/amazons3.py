@@ -1,6 +1,14 @@
 """
 
-Volume
+<b> AmazonS3 </b> allows loading files stored on Amazon S3.
+
+Authentication is assumed to happen outside of this module -
+that is, AWS security credentials have been configured on the machine
+on which this module is being run.  Search for "Configuring the AWS 
+Command Line Interface" on the web for instructions to do this.
+
+The URL field holds the S3Uri of the image to be loaded. E.g. 
+s3://mybucket/myimage.jpg
 
 """
 import boto3
@@ -22,11 +30,13 @@ class AmazonS3(cellprofiler.module.Module):
 
     def create_settings(self):
         self.url = cellprofiler.setting.PathnameOrURL(
-            "URL"
+            text="URL",
+            value="s3://landsat-pds/test/utm.tif"
         )
 
         self.name = cellprofiler.setting.ImageNameProvider(
-            text="Name"
+            text="Name",
+            value="LandSatTestImage"
         )
 
     def settings(self):

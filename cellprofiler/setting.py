@@ -1274,7 +1274,7 @@ class NameProvider(AlphanumericText):
         return self.__provided_attributes
 
 
-class ImageNameProvider(NameProvider):
+class   ImageNameProvider(NameProvider):
     """A setting that provides an image name
     """
 
